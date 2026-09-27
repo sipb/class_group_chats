@@ -45,11 +45,15 @@ export async function getSubjectDetailsMulesoft(subject: string): Promise<Subjec
 	const url = `${MULESOFT_SUBJECT_API}/terms/${term}/subjects/${subject}`;
 	const response = await fetch(url, {
 		headers: {
-			client_id: MULESOFT_CLIENT_ID,
-			client_secret: MULESOFT_CLIENT_SECRET
-		}
+			'Authorization': `Basic ${btoa(`${MULESOFT_CLIENT_ID}:${MULESOFT_CLIENT_SECRET}`)}`,
+		},
 	});
-	if (!response.ok) throw new SubjectNotFoundError();
+	if (!response.ok) {
+		// Inexisting subjects return a 400 bad request ._.
+		// Logging it in case it's actually something else, for debugging
+		console.log(response);
+		throw new SubjectNotFoundError();
+	}
 	const json = await response.json();
 	if (json.item.offered !== true) throw new SubjectNotFoundError();
 	const canonicalNumber = extractCanonicalNumber(json.item);
