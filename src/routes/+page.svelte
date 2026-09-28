@@ -85,7 +85,7 @@
 		// get callback (from window.location)
 		const hydrantCallback = `${window.location}hydrantCallback`;
 		const touchstoneCallback = `${window.location}touchstoneCallback`;
-		hydrantUrl = `${PUBLIC_HYDRANT_BASEURL}/#/export?callback=${encodeURIComponent(hydrantCallback)}`;
+		hydrantUrl = `${PUBLIC_HYDRANT_BASEURL}/export?callback=${encodeURIComponent(hydrantCallback)}`;
 		matrixSsoUrl = `${PUBLIC_MATRIX_BASEURL}/_matrix/client/v3/login/sso/redirect/saml?redirectUrl=${encodeURIComponent(touchstoneCallback)}`;
 
 		// determine if already logged in Element
